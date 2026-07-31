@@ -160,6 +160,7 @@ a { color: var(--brand); }
 }
 .map-popup .addr { color: var(--text-sub); font-size: 13px; margin-top: 3px; }
 .map-popup .card-actions { display: flex; gap: 8px; margin-top: 10px; }
+.map-popup.vv-fixed { position: fixed; right: auto; bottom: auto; z-index: 50; }
 .popup-close {
   position: absolute; top: 4px; right: 4px;
   border: 0; background: none; cursor: pointer;

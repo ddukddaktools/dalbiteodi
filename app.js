@@ -322,10 +322,33 @@
     mapPopup.hidden = false;
     mapPopup.querySelector(".popup-close").addEventListener("click", () => selectHospital(null, false));
     hideTip();
+    requestAnimationFrame(anchorPopup);
   }
   function hideMapPopup() {
     mapPopup.hidden = true;
     mapPopup.innerHTML = "";
+    mapPopup.classList.remove("vv-fixed");
+  }
+
+  /* 핀치줌 상태에서는 배너를 현재 보이는 화면(비주얼 뷰포트) 하단에 고정 —
+     확대를 풀지 않아도 병원 정보가 바로 보이도록 */
+  const vv = window.visualViewport;
+  function anchorPopup() {
+    if (mapPopup.hidden) return;
+    if (!vv || vv.scale <= 1.02) {
+      mapPopup.classList.remove("vv-fixed");
+      mapPopup.style.left = mapPopup.style.top = mapPopup.style.width = "";
+      return;
+    }
+    const pad = 8;
+    mapPopup.classList.add("vv-fixed");
+    mapPopup.style.width = (vv.width - pad * 2) + "px";
+    mapPopup.style.left = (vv.offsetLeft + pad) + "px";
+    mapPopup.style.top = (vv.offsetTop + vv.height - mapPopup.offsetHeight - pad) + "px";
+  }
+  if (vv) {
+    vv.addEventListener("resize", anchorPopup);
+    vv.addEventListener("scroll", anchorPopup);
   }
 
   /* ── 시작 ── */
