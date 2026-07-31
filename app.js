@@ -120,8 +120,10 @@
     return [x0, y0, W, H];
   }
 
+  const mobileMQ = window.matchMedia("(max-width: 860px)");
   function syncDotSize() {
-    const r = Math.max(2, currentVB[2] / 58);
+    /* 모바일은 터치 목표가 커지도록 점을 더 크게 */
+    const r = Math.max(2, currentVB[2] / (mobileMQ.matches ? 40 : 58));
     gDots.querySelectorAll("circle").forEach(c => {
       c.setAttribute("r", c.classList.contains("sel") ? r * 1.45 : r);
       c.setAttribute("stroke-width", r * 0.42);
