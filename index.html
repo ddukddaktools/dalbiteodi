@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>달빛어디 — 야간·휴일 어린이병원 찾기 | 뚝딱툴즈</title>
+<meta name="description" content="평일 야간·휴일에 소아 경증환자 진료가 가능한 전국 달빛어린이병원을 지도에서 찾고 바로 전화하세요. 국립중앙의료원 공개 정보 기반 단순 정보 제공 서비스입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
+</head>
+<body>
+
+<header class="brand-header">
+  <div class="brand-header-inner">
+    <a href="#" class="brand-logo">
+      <div class="brand-mark">뚝</div>
+      <div class="brand-name">뚝딱<span>툴즈</span></div>
+    </a>
+    <div class="brand-badge">무료 · 오픈소스</div>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>아이가 아픈 밤엔, <em>🌙 달빛어디</em></h1>
+  <p>평일 야간·휴일에도 문 여는 전국 달빛어린이병원을 지도에서 뚝딱 찾고, <br>
+  바로 전화해 진료 여부를 확인하세요.</p>
+</section>
+
+<div class="info-strip">
+  <span>🏥 전국 141곳</span>
+  <span>🗺️ 시·도 클릭으로 확대</span>
+  <span>📞 전화 바로 걸기</span>
+  <span>🔒 서버 전송 없음 · 브라우저에서만 동작</span>
+</div>
+
+<div class="notice-banner" role="alert">
+  <strong>⚠️ 방문 전 반드시 병원에 전화하여 진료 여부를 확인하세요.</strong>
+  임시휴진·운영중단이 있을 수 있습니다. &nbsp;·&nbsp; 응급상황이거나 판단이 어려우면 즉시 <a href="tel:119" class="tel-119">119</a>
+</div>
+
+<main class="wrap layout">
+  <section class="map-col" aria-label="지역 지도">
+    <div class="map-toolbar">
+      <button id="backBtn" class="back-btn" hidden>← 전국 지도</button>
+      <h2 id="mapTitle">시·도를 선택하세요</h2>
+    </div>
+    <div class="map-frame">
+      <svg id="map" role="group" aria-label="대한민국 시·도 지도"></svg>
+      <div id="tooltip" class="tooltip" hidden></div>
+      <div class="map-legend" id="legend" aria-hidden="true"></div>
+    </div>
+    <p class="map-source">출처: <a href="https://www.nmc.or.kr/nmc/babyList" target="_blank" rel="noopener">국립중앙의료원</a> · 수집일 2026-07-31</p>
+  </section>
+
+  <section class="panel-col" aria-label="병원 목록">
+    <div id="panel"></div>
+  </section>
+</main>
+
+<section class="disclaimer">
+  <div class="wrap">
+    <h2>이용 안내 및 면책조항</h2>
+    <ul>
+      <li><strong>본 사이트는 단순 정보 제공만을 목적으로 합니다.</strong> 의료광고 또는 특정 의료기관으로의 환자 유인·알선을 목적으로 하지 않으며, 게재된 어떤 의료기관과도 금전적·사업적 이해관계가 없습니다. 병원 목록은 이름(가나다)순으로만 정렬됩니다.</li>
+      <li><strong>의학적 판단은 이 사이트가 아닌 119 또는 의료진에게 받으세요.</strong> 아이의 상태가 판단하기 어렵거나 응급으로 의심되면 즉시 <a href="tel:119">119</a>에 연락하거나 응급실을 이용하시기 바랍니다.</li>
+      <li><strong>방문 전 반드시 전화 확인이 필요합니다.</strong> 의료기관의 사정에 따라 임시휴진·운영중단 등이 있을 수 있고 진료시간이 불규칙할 수 있으므로, 반드시 전화(119 또는 해당 병원)로 진료 여부와 진료시간을 확인한 후 방문해 주세요.</li>
+      <li><strong>정보의 정확성·최신성을 보증하지 않습니다.</strong> 본 정보는 국립중앙의료원 <a href="https://www.nmc.or.kr/nmc/babyList" target="_blank" rel="noopener">달빛어린이병원 안내</a> 페이지에서 <strong>2026년 7월 31일</strong> 수집한 것으로, 이후 지정·해제 등 변동이 반영되지 않았을 수 있습니다. 최신 정보는 원본 페이지 또는 <a href="https://www.e-gen.or.kr" target="_blank" rel="noopener">응급의료포털 E-Gen</a>에서 확인하세요.</li>
+      <li>광주광역시·전라남도는 수집 시점 기준 등록된 달빛어린이병원이 없습니다. 해당 지역에서는 E-Gen 또는 119로 야간 진료 가능 기관을 확인해 주세요.</li>
+    </ul>
+    <p class="disclaimer-note">데이터 출처: 국립중앙의료원 달빛어린이병원 안내 (수집일 2026-07-31) · 지도 경계: southkorea-maps(통계청 2013)</p>
+  </div>
+</section>
+
+<footer class="brand-footer">
+  <div class="footer-divider"></div>
+  <div class="footer-text">
+    <strong>뚝딱툴즈</strong> — 직장인의 문서 작업을 뚝딱 해결<br>
+    본 도구는 공공 정보 기반 참고용 서비스입니다. 의학적 판단은 <a href="tel:119">119</a> 또는 의료진에게 받으세요.<br>
+    <a href="https://iuinna.com" target="_blank" rel="noopener">iuinna.com</a> · <a href="https://www.threads.net/@ddukddak.tools" target="_blank" rel="noopener">Threads</a>
+    <div class="footer-privacy">🔒 모든 도구는 서버 전송 없이 브라우저에서만 동작합니다</div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
