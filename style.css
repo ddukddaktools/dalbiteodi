@@ -150,6 +150,22 @@ a { color: var(--brand); }
   transition: opacity .3s;
 }
 .map-legend.hidden { opacity: 0; }
+
+/* 지도 안 병원 정보 배너 (모바일에서 점 탭 시) */
+.map-popup {
+  position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 6;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; box-shadow: var(--shadow-md);
+  padding: 12px 40px 12px 14px;
+}
+.map-popup .addr { color: var(--text-sub); font-size: 13px; margin-top: 3px; }
+.map-popup .card-actions { display: flex; gap: 8px; margin-top: 10px; }
+.popup-close {
+  position: absolute; top: 4px; right: 4px;
+  border: 0; background: none; cursor: pointer;
+  font-size: 20px; line-height: 1; color: var(--text-muted);
+  padding: 8px 10px; font-family: inherit;
+}
 .map-legend .row { display: flex; align-items: center; gap: 7px; }
 .map-legend .swatch { width: 13px; height: 13px; border-radius: 4px; border: 1px solid var(--border-light); }
 

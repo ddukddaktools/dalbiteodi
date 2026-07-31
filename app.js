@@ -8,6 +8,7 @@
   const tooltip = document.getElementById("tooltip");
   const legend = document.getElementById("legend");
   const backBtn = document.getElementById("backBtn");
+  const mapPopup = document.getElementById("mapPopup");
   const mapTitle = document.getElementById("mapTitle");
 
   const FULL_VB = DATA.meta.viewBox;
@@ -168,6 +169,7 @@
     mapTitle.textContent = name;
     renderRegionPanel(name);
     hideTip();
+    hideMapPopup();
   }
 
   function backToNation() {
@@ -184,6 +186,7 @@
     backBtn.hidden = true;
     mapTitle.textContent = "시·도를 선택하세요";
     renderNationPanel();
+    hideMapPopup();
   }
   backBtn.addEventListener("click", backToNation);
 
@@ -284,15 +287,45 @@
   }
 
   /* ── 병원 선택 (점 ↔ 카드 연동) ── */
-  function selectHospital(id, scrollToCard) {
+  function selectHospital(id, fromDot) {
     selectedId = id;
     gDots.querySelectorAll("circle").forEach(d => d.classList.toggle("sel", d.dataset.id === id));
     syncDotSize();
     panel.querySelectorAll(".card").forEach(c => {
       const on = c.dataset.id === id;
       c.classList.toggle("sel", on);
-      if (on && scrollToCard) c.scrollIntoView({ behavior: "smooth", block: "center" });
+      /* 데스크톱은 우측 목록의 카드를 화면 중앙으로, 모바일은 지도 안 배너로 안내 */
+      if (on && fromDot && !mobileMQ.matches) c.scrollIntoView({ behavior: "smooth", block: "center" });
     });
+    if (id && fromDot && mobileMQ.matches) showMapPopup(id);
+    else hideMapPopup();
+  }
+
+  /* ── 지도 안 병원 정보 배너 (모바일) ── */
+  function showMapPopup(id) {
+    const sep = id.indexOf(":");
+    const region = id.slice(0, sep);
+    const h = (hospitalsByRegion[region] || [])[+id.slice(sep + 1)];
+    if (!h) return;
+    mapPopup.innerHTML = `
+      <button class="popup-close" aria-label="닫기">×</button>
+      <div class="card-top">
+        <span class="name">${esc(h.name)}</span>
+        <span class="type-badge">${esc(h.type)}</span>
+      </div>
+      <div class="addr">${esc(h.address)}</div>
+      <div class="card-actions">
+        <a class="act-btn act-tel" href="tel:${esc(h.phone)}">📞 ${esc(h.phone)}</a>
+        <a class="act-btn act-map" target="_blank" rel="noopener"
+           href="https://map.kakao.com/link/map/${encodeURIComponent(h.name)},${h.lat},${h.lng}">🗺️ 지도앱</a>
+      </div>`;
+    mapPopup.hidden = false;
+    mapPopup.querySelector(".popup-close").addEventListener("click", () => selectHospital(null, false));
+    hideTip();
+  }
+  function hideMapPopup() {
+    mapPopup.hidden = true;
+    mapPopup.innerHTML = "";
   }
 
   /* ── 시작 ── */
